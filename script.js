@@ -14,7 +14,7 @@ let currHue = getRandomHue();
 let rafId;
 
 const canvas = document.getElementById("scene");
-const scale = window.devicePixelRatio;
+const scale = window.devicePixelRatio >= 2 ? 2 : 1;
 const ctx = canvas.getContext("2d");
 ctx.scale(scale, scale)
 
