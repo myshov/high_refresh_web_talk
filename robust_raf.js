@@ -38,6 +38,10 @@ function drawDvd(ctx, pos, bounds, imgDimensions, currHue) {
   ctx.globalCompositeOperation = "source-over";
 }
 
+function rAF(cb) {
+  rafId = requestAnimationFrame(cb);
+}
+
 let start;
 function animate(ts) {
   if (start === undefined) {
@@ -61,7 +65,7 @@ function animate(ts) {
     currHue = getRandomHue();
   }
 
-  rafId = requestAnimationFrame(animate);
+  rAF(animate);
 }
 
 initCanvas(canvas, bounds);
@@ -71,7 +75,7 @@ let img = new Image();
 img.onload = function() {
   imgDimensions.width = img.naturalWidth / scale;
   imgDimensions.height = img.naturalHeight / scale;
-  requestAnimationFrame(animate);
+  rAF(animate);
 }
 
 if (scale > 1) {
@@ -85,5 +89,5 @@ window.onresize = function () {
     cancelAnimationFrame(rafId);
   }
   initCanvas(canvas, bounds);
-  requestAnimationFrame(animate);
+  rAF(animate);
 }
