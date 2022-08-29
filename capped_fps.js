@@ -59,7 +59,7 @@ function update(c, pos, imgBound, bounds, fps) {
 }
 
 let prev;
-const FPS = 60;
+const FPS = 50;
 const tpf = 1000 / FPS;
 
 function animate(ts) {
