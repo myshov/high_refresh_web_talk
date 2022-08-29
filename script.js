@@ -42,20 +42,25 @@ function rAF(cb) {
   rafId = requestAnimationFrame(cb);
 }
 
-function animate() {
-  drawDvd(ctx, pos, bounds, imgDimensions, currHue);
-  pos[X] = pos[X] + 3 * movVec[X];
-  if ((pos[X] >= bounds[X] - imgDimensions.width && movVec[X] > 0) || (pos[X] <= 0 && movVec[X] < 0)) {
-    movVec[X] *= -1;
+function update(c, pos, imgBound, bounds) {
+  const speed = 3;
+  pos[c] = pos[c] + speed * movVec[c];
+  if ((pos[c] >= bounds[c] - imgBound && movVec[c] > 0) || (pos[c] <= 0 && movVec[c] < 0)) {
+    if (pos[c] >= bounds[c] -imgBound) {
+      pos[c] =  bounds[c] - imgBound;
+    }
+    if (pos[c] <= 0) {
+      pos[c] = 0;
+    }
+    movVec[c] *= -1;
     currHue = getRandomHue();
   }
-  
-  pos[Y] = pos[Y] + 3 * movVec[Y];
-  if ((pos[Y] >= bounds[Y] - imgDimensions.height && movVec[Y] > 0) || (pos[Y] <= 0 && movVec[Y] < 0)) {
-    movVec[Y] *= -1;
-    currHue = getRandomHue();
-  }
+}
 
+function animate() {
+  update(X, pos, imgDimensions.width, bounds);
+  update(Y, pos, imgDimensions.height, bounds);
+  drawDvd(ctx, pos, bounds, imgDimensions, currHue);
   rAF(animate);
 }
 
