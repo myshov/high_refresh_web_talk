@@ -42,6 +42,21 @@ function rAF(cb) {
   rafId = requestAnimationFrame(cb);
 }
 
+function update(c, pos, imgBound, bounds, dt) {
+  const speed = Math.round(180 * dt);
+  pos[c] = pos[c] + speed * movVec[c];
+  if ((pos[c] >= bounds[c] - imgBound && movVec[c] > 0) || (pos[c] <= 0 && movVec[c] < 0)) {
+    if (pos[c] >= bounds[c] -imgBound) {
+      pos[c] =  bounds[c] - imgBound;
+    }
+    if (pos[c] <= 0) {
+      pos[c] = 0;
+    }
+    movVec[c] *= -1;
+    currHue = getRandomHue();
+  }
+}
+
 let start;
 function animate(ts) {
   if (start === undefined) {
@@ -49,22 +64,11 @@ function animate(ts) {
   }
   
   const dt = (ts - start) / 1000;
-  const dc = Math.round(180 * dt);
   start = ts;
   
   drawDvd(ctx, pos, bounds, imgDimensions, currHue);
-  pos[X] = pos[X] + dc * movVec[X];
-  if ((pos[X] >= bounds[X] - imgDimensions.width && movVec[X] > 0) || (pos[X] <= 0 && movVec[X] < 0)) {
-    movVec[X] *= -1;
-    currHue = getRandomHue();
-  }
-  
-  pos[Y] = pos[Y] + dc * movVec[Y];
-  if ((pos[Y] >= bounds[Y] - imgDimensions.height && movVec[Y] > 0) || (pos[Y] <= 0 && movVec[Y] < 0)) {
-    movVec[Y] *= -1;
-    currHue = getRandomHue();
-  }
-
+  update(X, pos, imgDimensions.width, bounds, dt);
+  update(Y, pos, imgDimensions.height, bounds, dt);
   rAF(animate);
 }
 
