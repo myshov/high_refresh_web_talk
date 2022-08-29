@@ -44,7 +44,7 @@ function rAF(cb) {
 
 
 function update(c, pos, imgBound, bounds, fps) {
-  const speed = 3 * Math.round(60 / fps)
+  const speed = Math.round(3 * 60 / fps)
   pos[c] = pos[c] + speed * movVec[c];
   if ((pos[c] >= bounds[c] - imgBound && movVec[c] > 0) || (pos[c] <= 0 && movVec[c] < 0)) {
     if (pos[c] >= bounds[c] -imgBound) {
