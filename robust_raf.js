@@ -66,9 +66,9 @@ function animate(ts) {
   const dt = (ts - start) / 1000;
   start = ts;
   
-  drawDvd(ctx, pos, bounds, imgDimensions, currHue);
   update(X, pos, imgDimensions.width, bounds, dt);
   update(Y, pos, imgDimensions.height, bounds, dt);
+  drawDvd(ctx, pos, bounds, imgDimensions, currHue);
   rAF(animate);
 }
 
